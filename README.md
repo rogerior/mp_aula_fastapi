@@ -20,12 +20,12 @@ uv sync
 ## Executar a aplicação localmente
 
 ```bash
-uv run fastapi dev main.py
+uv run fastapi dev api/main.py
 ```
 
 Caso já esteja com o ambiente virtual ativado:
 ```bash
-fastapi dev main.py
+fastapi dev api/main.py
 ```
 
 A aplicação estará disponível em: http://localhost:8000
