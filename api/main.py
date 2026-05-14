@@ -1,9 +1,9 @@
 from fastapi import Depends, FastAPI
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from routers import llm_router, operacoes_router
 from utils import get_logger, common_api_token
 
-load_dotenv()
+load_dotenv(find_dotenv())
 
 logger = get_logger()
 

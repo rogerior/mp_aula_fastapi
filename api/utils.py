@@ -6,9 +6,6 @@ import logging
 import os
 
 
-API_TOKEN = os.environ.get("API_TOKEN")
-
-
 def get_logger():
     """
     Configura e retorna o logger padrão da aplicação.
@@ -46,6 +43,7 @@ def common_api_token(api_token: str):
     Raises:
         HTTPException: Se o token fornecido não corresponder ao token esperado (HTTP 401).
     """
+    API_TOKEN = os.environ.get("API_TOKEN")
     if api_token != API_TOKEN:
         logger.warning(f"Token de autenticação inválido. Token enviado: {api_token}")
         raise HTTPException(
