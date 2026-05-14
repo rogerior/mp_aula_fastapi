@@ -10,7 +10,7 @@ logger = get_logger()
 
 app = FastAPI(
     title="Aula sobre API",
-    summary="APIs desenvolvidas durante as aulas",
+    summary="APIs desenvolvidas durante as aulas para a turma do MPGO",
     description="Essa **API** foi desenvolvida durante as aulas de FastAPI para a turma do MPGO, onde foram abordados os seguintes tópicos: criação de rotas, manipulação de parâmetros, uso de modelos Pydantic e muito mais.",
     version="0.2",
     terms_of_service="http://example.com/terms/",
