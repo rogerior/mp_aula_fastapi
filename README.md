@@ -17,6 +17,12 @@ Faça uma cópia do arquivo `.env.sample` e coloque com o nome `.env` e preencha
 uv sync
 ```
 
+## Instalar o pre-commit
+
+```bash
+uv run pre-commit install
+```
+
 ## Executar a aplicação localmente
 
 ```bash
