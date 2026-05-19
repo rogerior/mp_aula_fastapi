@@ -17,7 +17,7 @@ router = APIRouter()
     description="Essa rota recebe dois números inteiros e retorna a soma deles. Será descontinuado em 30/05/2026.",
     deprecated=True,
 )
-def soma(numero1: int, numero2: int):
+async def soma(numero1: int, numero2: int):
     total = numero1 + numero2
     return {"resultado": total}
 
@@ -25,7 +25,7 @@ def soma(numero1: int, numero2: int):
 # Passando o número 1 e 2 no corpo da requisição
 # http://127.0.0.1:8000/soma_formato2?numero1=3&numero2=2
 @router.post(path="/v2/soma")
-def soma_formato2(numero1: int, numero2: int):
+async def soma_formato2(numero1: int, numero2: int):
     total = numero1 + numero2
     return {"resultado": total}
 
@@ -34,12 +34,12 @@ def soma_formato2(numero1: int, numero2: int):
 @router.post(
     path="/v3/soma",
     response_model=Resultado,
-    status_code=status.HTTP_201_CREATED,
+    status_code=status.HTTP_200_OK,
     response_description="A soma foi realizada com sucesso",
     summary="Soma de dois números",
     description="Essa rota recebe dois números inteiros e retorna a soma deles.",
 )
-def soma_formato3(numeros: Numeros):
+async def soma_formato3(numeros: Numeros):
 
     # Verificando se os números são maior ou igual a 0
     if numeros.numero1 < 0 or numeros.numero2 < 0:
@@ -67,7 +67,7 @@ def soma_formato3(numeros: Numeros):
     summary="Realiza uma operação matemática",
     description="Essa rota recebe dois números inteiros e o tipo da operação matemática (soma, subtração, multiplicação ou divisão) e retorna o resultado da operação.",
 )
-def operacao_matematica(numeros: Numeros, operacao: TipoOperacao):
+async def operacao_matematica(numeros: Numeros, operacao: TipoOperacao):
 
     if operacao == TipoOperacao.soma:
         resultado = numeros.numero1 + numeros.numero2

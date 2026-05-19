@@ -1,7 +1,9 @@
-from fastapi import Depends, FastAPI
+from fastapi import FastAPI
 from dotenv import load_dotenv, find_dotenv
-from routers import llm_router, operacoes_router
-from utils import get_logger, common_api_token
+from routers import llm_router, operacoes_router, web_router, health_router
+from utils import get_logger
+from fastapi_mcp import FastApiMCP
+
 
 load_dotenv(find_dotenv())
 
@@ -23,7 +25,7 @@ app = FastAPI(
         "name": "Apache 2.0",
         "url": "https://www.apache.org/licenses/LICENSE-2.0.html",
     },
-    dependencies=[Depends(common_api_token)],
+    # dependencies=[Depends(common_api_token)],
 )
 
 
@@ -31,3 +33,9 @@ app.include_router(llm_router.router, prefix="/llm")
 app.include_router(
     operacoes_router.router, prefix="/operacoes", tags=["Operações Matemáticas"]
 )
+app.include_router(web_router.router, prefix="/web", tags=["Pesquisa na Web"])
+app.include_router(health_router.router, tags=["Health Check"])
+
+
+mcp = FastApiMCP(app)
+mcp.mount_http()
