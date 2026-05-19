@@ -1,6 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from dotenv import load_dotenv, find_dotenv
-from routers import llm_router, operacoes_router, web_router, health_router
+from routers import llm_router, operacoes_router, web_router, health_router, auth_router
 from utils import get_logger
 from fastapi_mcp import FastApiMCP
 
@@ -25,15 +25,24 @@ app = FastAPI(
         "name": "Apache 2.0",
         "url": "https://www.apache.org/licenses/LICENSE-2.0.html",
     },
-    # dependencies=[Depends(common_api_token)],
 )
 
 
-app.include_router(llm_router.router, prefix="/llm")
+app.include_router(auth_router.router, tags=["Autenticação"])
+app.include_router(
+    llm_router.router,
+    prefix="/llm",
+    dependencies=[Depends(auth_router.get_current_active_user)],
+)
 app.include_router(
     operacoes_router.router, prefix="/operacoes", tags=["Operações Matemáticas"]
 )
-app.include_router(web_router.router, prefix="/web", tags=["Pesquisa na Web"])
+app.include_router(
+    web_router.router,
+    prefix="/web",
+    tags=["Pesquisa na Web"],
+    dependencies=[Depends(auth_router.get_current_active_user)],
+)
 app.include_router(health_router.router, tags=["Health Check"])
 
 

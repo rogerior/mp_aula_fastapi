@@ -1,4 +1,5 @@
-from fastapi import status, HTTPException, APIRouter
+from fastapi import status, HTTPException, APIRouter, Depends
+from routers import auth_router
 
 from models import Resultado, Numeros, TipoOperacao
 from utils import get_logger
@@ -38,6 +39,7 @@ async def soma_formato2(numero1: int, numero2: int):
     response_description="A soma foi realizada com sucesso",
     summary="Soma de dois números",
     description="Essa rota recebe dois números inteiros e retorna a soma deles.",
+    dependencies=[Depends(auth_router.get_current_active_user)],
 )
 async def soma_formato3(numeros: Numeros):
 
@@ -66,6 +68,7 @@ async def soma_formato3(numeros: Numeros):
     path="/v1/operacao_matematica",
     summary="Realiza uma operação matemática",
     description="Essa rota recebe dois números inteiros e o tipo da operação matemática (soma, subtração, multiplicação ou divisão) e retorna o resultado da operação.",
+    dependencies=[Depends(auth_router.get_current_active_user)],
 )
 async def operacao_matematica(numeros: Numeros, operacao: TipoOperacao):
 
